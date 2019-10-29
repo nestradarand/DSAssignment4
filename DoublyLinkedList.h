@@ -22,10 +22,9 @@ public:
     T removeFront();
     T getFront();
     T getBack();
-    // T deletePos(int position);
     //finds index based on the entry
     int find(T entry);
-    DoubleListNode<T>* remove(T entry);
+    bool remove(T entry);
 
     bool isEmpty();
     void printList();
@@ -126,7 +125,7 @@ T DoublyLinkedList<T>::removeBack()
 }
 //need to as if this is even necessary
 template <typename T>
-DoubleListNode<T>* DoublyLinkedList<T>::remove(T data)
+bool DoublyLinkedList<T>::remove(T data)
 {
   if(isEmpty())
     throw std::runtime_error("stack is empty");
@@ -135,7 +134,7 @@ DoubleListNode<T>* DoublyLinkedList<T>::remove(T data)
   {
     current = current -> next;
     if(current == NULL)//means we didnt find the data
-      return NULL;
+      return false;
   }
   //if we get to here it means we found it
   //check if the node is the front
@@ -158,7 +157,8 @@ DoubleListNode<T>* DoublyLinkedList<T>::remove(T data)
   current -> next = NULL;
   current -> prev = NULL;
   size --;
-  return current;
+  delete current;
+  return true;
   //doesnt delete the node, just returns it
 }
 template <typename T>
@@ -244,7 +244,4 @@ T DoublyLinkedList<T>::getBack()
 //     delete current;
 //     return returner;
 // }
-
-
-
 #endif
