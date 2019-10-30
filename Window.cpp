@@ -24,10 +24,9 @@ void Window::makeOccupied(int time)
 }
 void Window::oneTickElapsed()
 {
+    timeLeft --;
     if(timeLeft == 0)
         occupied = false;
-    else 
-        timeLeft --;
 }
 void Window::makeUnoccupied()
 {
