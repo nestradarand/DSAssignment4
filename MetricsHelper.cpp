@@ -31,7 +31,6 @@ float MetricsHelper::getMean()
     for(int i =0; i <sizeOfArray;++i)
     {
         sum = sum + baseDataSet[i];
-        cout << sum <<endl;
     }
     return (float(sum)/float(sizeOfArray));
 }
@@ -71,4 +70,12 @@ void MetricsHelper::printArray()
 {
     for(int i =0; i <sizeOfArray;++i)
         cout << baseDataSet[i] <<endl;
+}
+int MetricsHelper::getNumberOver(int bound)
+{
+    int sum = 0;
+    for(int i = 0; i<sizeOfArray;++i)
+        if(baseDataSet[i] >bound)
+            sum ++;
+    return sum;
 }

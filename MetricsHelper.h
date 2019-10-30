@@ -14,6 +14,7 @@ class MetricsHelper
         float getMedian();
         int getMax();
         void printArray();
+        int getNumberOver(int i );
     private:
         void sort();
         int *baseDataSet;

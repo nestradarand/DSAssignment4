@@ -165,10 +165,10 @@ int main(int argc,char** argv)
         delete studStack -> pop();
     }
     MetricsHelper *metric = new MetricsHelper(studentWaitTimes, studentCount);
-    cout << "Mean student wait time: " << metric -> getMean();
-    cout << "Median student wait time: " << metric -> getMedian();
-    cout << "Longest student wait time: " << metric -> getMedian();
-    cout << "Number of students waiting over ten minutes: " <<endl;
+    cout << "Mean student wait time: " << metric -> getMean()<<endl;
+    cout << "Median student wait time: " << metric->getMedian() << endl;
+    cout << "Longest student wait time: " << metric->getMedian() << endl;
+    cout << "Number of students waiting over ten minutes: " << metric -> getNumberOver(10)<<endl;
 
         int *windowIdleTimes = new int[windowCount]; //to store window metrics (idleTimes)
     for (int i = 0; i < windowCount; ++i)
@@ -179,15 +179,15 @@ int main(int argc,char** argv)
     delete[] windows;
 
     metric ->setNewDataset(windowIdleTimes,windowCount);
-    cout << "Mean window idle time: " << metric->getMean();
-    cout << "Longest window idle time: " << metric->getMedian();
-    cout << "Number of windows idle for over five minutes: " << metric->getMedian();
+    cout << "Mean window idle time: " << metric->getMean() << endl;
+    cout << "Longest window idle time: " << metric->getMedian() << endl;
+    cout << "Number of windows idle for over five minutes: " << metric->getNumberOver(5) << endl;
 
     //to delete the array of windows
     // for (int i = 0; i < windowCount; ++i)
     //     delete windows[i];
     // delete[] windows;
-
+    delete metric;
     delete[] studentWaitTimes;
     delete [] windowIdleTimes;
     delete studStack;
