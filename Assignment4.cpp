@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "DLQueue.h"
 #include "GenStack.h"
+#include "MetricsHelper.h"
 #include <cstddef>
 #include <fstream>
 
@@ -34,7 +35,7 @@ int main(int argc,char** argv)
     }
     cout << "File successfully opened" << endl;
     DLQueue<Student*> *studentQueue = new DLQueue<Student*>();
-    int input,windowCount,timeArrive,numStudents,timeNeeded;
+    int input,windowCount,timeArrive,numStudents,timeNeeded,studentCount = 0;
     int index = 0;
 
     while(inputStream >>input)
@@ -49,6 +50,7 @@ int main(int argc,char** argv)
             {
                 inputStream >> timeNeeded;
                 studentQueue -> enqueue(new Student(timeArrive,timeNeeded));
+                studentCount ++;
             }
         }
         index ++;
@@ -88,8 +90,9 @@ int main(int argc,char** argv)
                 {
                     if(!windows[i] -> isOccupied())
                     {
-                        cout << "Student served at a time :" << time << " on window " << i<< endl;
-                        cout << "time needed : " << nextStudentUp -> getTimeAtWindow()<<endl;
+                        // //DEBUGGING for when people are served and how much time they need at the window
+                        // cout << "Student served at a time :" << time << " on window " << i<< endl;
+                        // cout << "time needed : " << nextStudentUp -> getTimeAtWindow()<<endl;
                         windows[i] -> makeOccupied(nextStudentUp -> getTimeAtWindow());
                         //sets the student's time spent waiting
                         int timeWaiting = time - nextStudentUp ->getArrivalTime();
@@ -144,15 +147,20 @@ int main(int argc,char** argv)
         }
         
     }
-    //DEBUGGING to check if time spent idle works and it does
-    for(int i =0;i<windowCount;++i)
-        cout << "Time spent Idle: " << windows[i] ->getIdleTime() <<endl;
-    //DEBUGGING to see if time waiting works and it does
-    while(!studStack ->isEmpty())
-    {
-        cout <<"Time spent waiting: "<< studStack -> peek() -> getTimeWaiting() <<endl;
-        delete studStack -> pop();
-    }
+    // //DEBUGGING to check if time spent idle works and it does
+    // for(int i =0;i<windowCount;++i)
+    //     cout << "Time spent Idle: " << windows[i] ->getIdleTime() <<endl;
+    // //DEBUGGING to see if time waiting works and it does
+    // while(!studStack ->isEmpty())
+    // {
+    //     cout <<"Time spent waiting: "<< studStack -> peek() -> getTimeWaiting() <<endl;
+    //     delete studStack -> pop();
+    // }
+
+
+    ///metrics calculations
+    int *windowIdleTimes = new int[windowCount];//to store window metrics (idleTimes)
+    int *studentIdleTimes = new int[studentCount];
 
     //to delete the array of windows
     for (int i = 0; i < windowCount; ++i)
