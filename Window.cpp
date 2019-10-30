@@ -11,13 +11,22 @@ Window::~Window()
 {
 
 }
-void Window::addOneTickIdle()
+void Window::addIdleTick()
 {
     timeSpentIdle ++;
 }
-void Window::makeOccupied()
+void Window::makeOccupied(int time)
 {
+    if(time < 0)
+        throw std::runtime_error("Invalid wait time entered");
+    timeLeft = time;
     occupied = true;
+}
+void Window::oneTickElapsed()
+{
+    if(timeLeft <=0)
+        throw std::runtime_error("time attempting to be decremented past zero");
+    timeLeft --;
 }
 void Window::makeUnoccupied()
 {
@@ -30,4 +39,8 @@ bool Window::isOccupied()
 int Window::getIdleTime()
 {
     return timeSpentIdle;
+}
+int Window::getTimeLeft()
+{
+    return timeLeft;
 }

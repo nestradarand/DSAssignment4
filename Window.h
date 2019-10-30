@@ -6,13 +6,18 @@ class Window
     public:
         Window();
         ~Window();
-        void addOneTickIdle();
-        void makeOccupied();
+        void addIdleTick();
+        void makeOccupied(int time);
+        void oneTickElapsed();
         void makeUnoccupied();
         bool isOccupied();
         int getIdleTime();
         int timeSpentIdle = 0;
+        int timeLeft = 0;
         bool occupied = false;
+
+        //
+        int getTimeLeft();
 
 
 };
