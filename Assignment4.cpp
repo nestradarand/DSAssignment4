@@ -59,10 +59,7 @@ int main(int argc,char** argv)
     windows =  new Window*[windowCount];//works
     for(int i =0; i < windowCount;++i)
         windows[i] = new Window();    
-    //to delete the array of windows
-    for(int i =0; i <windowCount;++i)
-        delete windows[i];
-    delete [] windows;
+  
     inputStream.close();
     cout <<"File successfully read from" <<endl;
     GenStack<Student*> *studStack = new GenStack<Student*>(10);
@@ -157,6 +154,10 @@ int main(int argc,char** argv)
         delete studStack -> pop();
     }
 
+    //to delete the array of windows
+    for (int i = 0; i < windowCount; ++i)
+        delete windows[i];
+    delete[] windows;
 
     delete studStack;
     delete studentQueue;

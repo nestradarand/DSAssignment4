@@ -12,9 +12,9 @@ class Window
         void makeUnoccupied();
         bool isOccupied();
         int getIdleTime();
-        int timeSpentIdle = 0;
-        int timeLeft = 0;
-        bool occupied = false;
+        int timeSpentIdle;
+        int timeLeft;
+        bool occupied;
 
         //
         int getTimeLeft();

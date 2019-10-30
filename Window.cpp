@@ -5,7 +5,9 @@ using namespace std;
 
 Window::Window()
 {
-
+    occupied = false;
+    timeLeft = 0;
+    timeSpentIdle = 0;
 }
 Window::~Window()
 {
