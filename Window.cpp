@@ -24,9 +24,10 @@ void Window::makeOccupied(int time)
 }
 void Window::oneTickElapsed()
 {
-    if(timeLeft <=0)
-        throw std::runtime_error("time attempting to be decremented past zero");
-    timeLeft --;
+    if(timeLeft == 0)
+        occupied = false;
+    else 
+        timeLeft --;
 }
 void Window::makeUnoccupied()
 {

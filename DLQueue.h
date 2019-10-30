@@ -12,7 +12,7 @@ public:
     ~DLQueue();
     DoublyLinkedList<T> *theList;
 
-    void enqueue(T i);
+    void enqueue(const T i);
     T dequeue();
 
     T peek();
@@ -43,7 +43,7 @@ DLQueue<T>::~DLQueue()
     delete theList;
 }
 template <typename T>
-void DLQueue<T>::enqueue(T i)
+void DLQueue<T>::enqueue(const T i)
 {
     //do we even need this?
     // if(isFull())
