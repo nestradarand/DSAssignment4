@@ -11,9 +11,9 @@ using namespace std;
 
 int main(int argc,char** argv)
 {
-    Student *stud1 = new Student(1,3);
-    Student *stud2 = new Student(2,6);
-    Student *stud3 = new Student(5,1);
+    Student *stud1 = new Student(0,1);
+    Student *stud2 = new Student(1,10);
+    Student *stud3 = new Student(11,1);
     // Student *stud4 = new Student(3,2);
     DLQueue<Student*> *studentQueue = new DLQueue<Student*>();
     //stack to store the stuedents once they are served
@@ -25,69 +25,62 @@ int main(int argc,char** argv)
 
     
 
-    ///5 is arbitrary
-    const int winSize = 1;
+    ///MUST HAVE THE NUMBER OF WINDOWS FOR THIS TO WORK
+    const int winSize = 2;
     Window *win1 = new Window();
-    // Window *win2 = new Window();
+    Window *win2 = new Window();
     Window *windows[winSize];
     windows[0] = win1;
-    // windows[1] = win2;
+    windows[1] = win2;
 
-    // windows[0] -> makeOccupied(studentQueue -> peek() ->getTimeAtWindow());
-    // while(windows[0] -> isOccupied())
-    // {
-    //     cout << "Is occupied? :" <<windows[0] -> isOccupied()<<endl;
-    //     cout << windows[0] -> getTimeLeft() <<endl;
-    //     windows[0]->oneTickElapsed();
-    // }
-    // cout << "Is occupied? :" <<windows[0] -> isOccupied()<<endl;
 
 
 
     ///main functionality for registrat simulation
     int time = 0;
-    while(true)
+    bool end = false;
+    while(!end)
     {
-        Student *nextStudentUp = studentQueue -> peek();
-        //while the time that the student arrived has passed
-        while(time >= nextStudentUp-> getArrivalTime())
+        if(!studentQueue -> isEmpty())
         {
-            //need to figure out how to use full to make sure we break if the windows are full
-            //reset to true everytime so that if a student is not served at a window, we break the loop
-            bool full = true;
-            for(int i =0; i < winSize;i++)//go through all windows
+            Student *nextStudentUp = studentQueue -> peek();
+            while(time >= nextStudentUp-> getArrivalTime())
             {
-                if(!windows[i] -> isOccupied())
+                //reset to true everytime so that if a student is not served at a window, we break the loop
+                bool full = true;
+                for(int i =0; i < winSize;i++)//go through all windows
                 {
-                    cout << "Student served at a time :" << time << " on window " << i<< endl;
-                    cout << "time needed : " << nextStudentUp -> getTimeAtWindow()<<endl;
-                    windows[i] -> makeOccupied(nextStudentUp -> getTimeAtWindow());
-                    //sets the student's time spent waiting
-                    int timeWaiting = time - nextStudentUp ->getArrivalTime();
-                    //references the student to be saved to the stack for later calculations
-                    Student *studentToSave = studentQueue ->dequeue();
-                    studentToSave-> updateTimeWaiting(timeWaiting);//updates that student's time spent waiting
-                    studStack -> push(studentToSave);
-                    full = false;
-                    break;
+                    if(!windows[i] -> isOccupied())
+                    {
+                        cout << "Student served at a time :" << time << " on window " << i<< endl;
+                        cout << "time needed : " << nextStudentUp -> getTimeAtWindow()<<endl;
+                        windows[i] -> makeOccupied(nextStudentUp -> getTimeAtWindow());
+                        //sets the student's time spent waiting
+                        int timeWaiting = time - nextStudentUp ->getArrivalTime();
+                        //references the student to be saved to the stack for later calculations
+                        Student *studentToSave = studentQueue ->dequeue();
+                        studentToSave-> updateTimeWaiting(timeWaiting);//updates that student's time spent waiting
+                        studStack -> push(studentToSave);
+                        full = false;
+                        break;
+                    }
+                    else 
+                        cout << "Window " << i<< " is Occupied"<<endl;
                 }
+                if(full)
+                    break;
+                //if a student was served at a window, we check the next student to see if they have "arrived" yet
+                if(studentQueue -> isEmpty())
+                    break;
                 else 
-                    cout << "Window " << i<< " is Occupied"<<endl;
-
-            }
-            if(full)
-                break;
-            //if a student was served at a window, we check the next student to see if they have "arrived" yet
-            try 
-            {
-                nextStudentUp = studentQueue -> peek();
-            }
-            catch(std::runtime_error e1)
-            {
-                break;
-            }
+                {
+                    nextStudentUp = studentQueue -> peek();
+                }
             
+            }
         }
+        //while the time that the student arrived has passed
+                
         time ++;//increment time
 
         //manages how time elapses for idle time and how long a window is occupied
@@ -111,7 +104,7 @@ int main(int argc,char** argv)
                 if(windows[i] ->isOccupied())
                     stop = false;//if any window is still in use, dont stop
             if(stop)//if windows not in use and student queue is empty, stop the simulation
-                break;                    
+                end = true;                    
         }
         
     }
@@ -125,7 +118,7 @@ int main(int argc,char** argv)
         delete studStack -> pop();
     }
     delete win1;
-    // delete win2;
+    delete win2;
 
     delete studStack;
     delete studentQueue;

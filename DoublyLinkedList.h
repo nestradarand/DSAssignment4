@@ -207,41 +207,5 @@ T DoublyLinkedList<T>::getBack()
 {
   return back -> data;
 }
-//needs work do we even need it???
-// template <typename T>
-// T DoublyLinkedList<T>::deletePos(int position)
-// {
-//     if(size == 0)
-//       throw std::runtime_error("List is empty");
-//     int index = 0;
-//     DoubleListNode<T> *current = front;
-//     DoubleListNode<T> *previous = front;
-//     //if the first node is to be deleted
-//     if(position == index)
-//     {
-//       previous = NULL;
-//       front = current ->next;
-//       current -> next -> prev = NULL;
-//       current -> next -> NULL;
-//     }
-//     else
-//     {
-//       while(index != position)
-//       {
-//         previous = current;
-//         current = current -> next;
-//         index ++;
-//       }
-//       previous ->next = current -> next;
-//       //to avoid the next in line node
-//       current -> next = NULL;
-//     }
-    
-//     T returner = current -> data;  
-//     size -- ;
-//     previous = NULL;
-//     delete previous;
-//     delete current;
-//     return returner;
-// }
+
 #endif

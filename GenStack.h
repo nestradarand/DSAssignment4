@@ -86,7 +86,7 @@ template <typename T>
 const T GenStack<T>::peek() const
 {
   if(isEmpty())
-    throw std::runtime_error("Cannot pop. Stack is empty.");
+    throw std::runtime_error("Cannot peek. Stack is empty.");
   return theStack[top];
 }
 //returns if the stack is full
