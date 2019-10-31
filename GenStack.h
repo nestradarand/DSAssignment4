@@ -1,3 +1,10 @@
+/*
+Name: Noah Estrada-Rand
+Student ID#: 2272490
+Chapman email: estra146@mail.chapman.edu
+Course Number and Section: CPSC-350-01
+Assignment: Assignment 4 Registrar Simulation
+*/
 #ifndef GENSTACK_H
 #define GENSTACK_H
 
@@ -104,7 +111,7 @@ void GenStack<T>::resizeArray(T* newArray,int currentSize)
   for(int i = 0; i<currentSize; ++i)
     tempArray[i] = newArray[i];
   theStack = tempArray;
-  tempArray = NULL;
+  tempArray = NULL;//used to avoid double deletes
   delete stackHolder;
   delete tempArray;
   size = currentSize *2;

@@ -1,37 +1,53 @@
+/*
+Name: Noah Estrada-Rand
+Student ID#: 2272490
+Chapman email: estra146@mail.chapman.edu
+Course Number and Section: CPSC-350-01
+Assignment: Assignment 4 Registrar Simulation
+*/
 #ifndef DOUBLYLINKEDLIST_H
 #define DOUBLYLINKEDLIST_H
 #include "DoubleListNode.h"
 #include <cstddef>
 #include <iostream>
 
+//serves as a class to store data in a linked manner
 
 template <typename T>
 class DoublyLinkedList
 {
 private:
+    //references to the front and back nodes and the size of the entire list
     DoubleListNode<T> *front;
     DoubleListNode<T> *back;
     unsigned int size;
 public:
+    //constructor and destructor
     DoublyLinkedList();
     ~DoublyLinkedList();
-
+    //insert data to the front or back of the list as a new node
     void insertFront(T newEntry);
     void insertBack(T newEntry);
+    //removes the front or back node
     T removeBack();
     T removeFront();
+    //returns the data stored in the front or back nodes
     T getFront();
     T getBack();
     //finds index based on the entry
     int find(T entry);
+    //removes a node based on the data entered
     bool remove(T entry);
-
+    //returns if the list is empty
     bool isEmpty();
+    //prints the list
     void printList();
+    //returns the size of the list
     unsigned int getSize();
 };
 
 //implementation
+//default constructor
 template <typename T>
 DoublyLinkedList<T>::DoublyLinkedList()
 {
@@ -39,12 +55,14 @@ DoublyLinkedList<T>::DoublyLinkedList()
   front = NULL;
   back = NULL;
 }
+//destructor
 template <typename T>
 DoublyLinkedList<T>::~DoublyLinkedList()
 {
   while(!isEmpty())
     removeFront();
 }
+//inserts new data entry to the front of the list as a new node
 template <typename T>
 void DoublyLinkedList<T>::insertFront(T newEntry)
 {
@@ -53,7 +71,7 @@ void DoublyLinkedList<T>::insertFront(T newEntry)
   {
     back = node;
   }
-  else
+  else//update pointers of the front and the next node in line
   {
     node -> next = front;
     front -> prev = node;
@@ -63,6 +81,7 @@ void DoublyLinkedList<T>::insertFront(T newEntry)
   size ++;
 
 }
+//removes the front node
 template <typename T>
 T DoublyLinkedList<T>::removeFront()
 {
@@ -78,12 +97,14 @@ T DoublyLinkedList<T>::removeFront()
   {
     front -> next -> prev = NULL;
   }
+  //set the front to its next node then delete the original front node
   front = front -> next;
   toDelete -> next = NULL;
   delete toDelete;
   size -- ;
   return holder;
 }
+//insert data into the back of the list as a new node
 template <typename T>
 void DoublyLinkedList<T>::insertBack(T newEntry)
 {
@@ -101,6 +122,7 @@ void DoublyLinkedList<T>::insertBack(T newEntry)
 
   size ++;
 }
+//removes the last item of the list
 template <typename T>
 T DoublyLinkedList<T>::removeBack()
 {
@@ -115,6 +137,7 @@ T DoublyLinkedList<T>::removeBack()
   {
     back -> prev -> next = NULL;
   }
+  //update the reference of back to the node before the original back
   back = back -> prev;
   T temp = backTemp -> data;
   backTemp -> prev = NULL;
@@ -123,7 +146,7 @@ T DoublyLinkedList<T>::removeBack()
 
   return temp;
 }
-//need to as if this is even necessary
+//removes a data entry by searching for it then deleting the node and returning the stored data
 template <typename T>
 bool DoublyLinkedList<T>::remove(T data)
 {
@@ -161,11 +184,13 @@ bool DoublyLinkedList<T>::remove(T data)
   return true;
   //doesnt delete the node, just returns it
 }
+//returns if the list is empty or not
 template <typename T>
 bool DoublyLinkedList<T>::isEmpty()
 {
   return size == 0;
 }
+//prints the list
 template <typename T>
 void DoublyLinkedList<T>::printList()
 {
@@ -176,16 +201,19 @@ void DoublyLinkedList<T>::printList()
     current = current -> next;
   }
 }
+//returns the size of the list
 template <typename T>
 unsigned int DoublyLinkedList<T>::getSize()
 {
   return size;
 }
+//finds the index of an entry based on the data to search for
 template <typename T>
 int DoublyLinkedList<T>::find(T entry)
 {
   int index = 0;
   DoubleListNode<T> *current = front;
+  //stops if there are no other nodes to search or if it si found
   while(current != NULL)
   {
     if(current -> data == entry)
@@ -194,14 +222,16 @@ int DoublyLinkedList<T>::find(T entry)
     current = current -> next;
   }
   if(current == NULL)
-    index = -1;
+    index = -1;//return negative one if not found
   return index;  
 }
+//returns the data of the front node
 template <typename T>
 T DoublyLinkedList<T>::getFront()
 {
   return front ->data;
 }
+//returns the data of the last node
 template <typename T>
 T DoublyLinkedList<T>::getBack()
 {
